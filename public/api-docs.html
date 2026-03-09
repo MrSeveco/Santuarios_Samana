@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Documentation - Santuarios</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; }
+    h1 { color: #333; }
+    .endpoint { background: #f5f5f5; padding: 15px; margin: 15px 0; border-radius: 5px; }
+    .method { display: inline-block; padding: 5px 10px; border-radius: 3px; color: white; font-weight: bold; }
+    .post { background: #49cc90; }
+    .get { background: #61affe; }
+    .delete { background: #f93e3e; }
+    code { background: #e8e8e8; padding: 2px 6px; border-radius: 3px; }
+    pre { background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <h1>📚 API Documentation - Santuarios Media Upload</h1>
+  
+  <div class="endpoint">
+    <h2><span class="method post">POST</span> /api/upload</h2>
+    <p><strong>Descripción:</strong> Sube una imagen o video a Supabase Storage</p>
+    <p><strong>Content-Type:</strong> multipart/form-data</p>
+    <p><strong>Body:</strong></p>
+    <ul>
+      <li><code>file</code> - Archivo a subir (imagen o video)</li>
+    </ul>
+    <p><strong>Respuesta exitosa (200):</strong></p>
+    <pre>{
+  "success": true,
+  "data": {
+    "fileName": "images/1234567890-abc123.jpg",
+    "fileType": "image",
+    "mimeType": "image/jpeg",
+    "size": 102400,
+    "publicUrl": "https://xxx.supabase.co/storage/v1/object/public/...",
+    "path": "images/1234567890-abc123.jpg"
+  },
+  "message": "Archivo subido exitosamente"
+}</pre>
+  </div>
+
+  <div class="endpoint">
+    <h2><span class="method delete">DELETE</span> /api/delete</h2>
+    <p><strong>Descripción:</strong> Elimina un archivo de Supabase Storage</p>
+    <p><strong>Query Parameters:</strong></p>
+    <ul>
+      <li><code>path</code> - Ruta del archivo a eliminar (ej: images/1234567890-abc123.jpg)</li>
+    </ul>
+    <p><strong>Ejemplo:</strong> <code>/api/delete?path=images/1234567890-abc123.jpg</code></p>
+    <p><strong>Respuesta exitosa (200):</strong></p>
+    <pre>{
+  "success": true,
+  "message": "Archivo eliminado exitosamente"
+}</pre>
+  </div>
+
+  <div class="endpoint">
+    <h2><span class="method get">GET</span> /api/list</h2>
+    <p><strong>Descripción:</strong> Lista archivos en Supabase Storage</p>
+    <p><strong>Query Parameters (opcionales):</strong></p>
+    <ul>
+      <li><code>folder</code> - Carpeta a listar (default: raíz)</li>
+      <li><code>limit</code> - Cantidad máxima de resultados (default: 100)</li>
+      <li><code>offset</code> - Offset para paginación (default: 0)</li>
+    </ul>
+    <p><strong>Ejemplo:</strong> <code>/api/list?folder=images&limit=10</code></p>
+    <p><strong>Respuesta exitosa (200):</strong></p>
+    <pre>{
+  "success": true,
+  "data": [
+    {
+      "name": "1234567890-abc123.jpg",
+      "path": "images/1234567890-abc123.jpg",
+      "size": 102400,
+      "createdAt": "2026-03-06T10:00:00.000Z",
+      "publicUrl": "https://xxx.supabase.co/storage/v1/object/public/..."
+    }
+  ],
+  "total": 1,
+  "folder": "images"
+}</pre>
+  </div>
+
+  <hr>
+  <p><strong>Base URL:</strong> <code id="baseUrl"></code></p>
+  <script>
+    document.getElementById('baseUrl').textContent = window.location.origin;
+  </script>
+</body>
+</html>
